@@ -2,6 +2,64 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  background: #fafaf9;
+@layer base {
+  html {
+    scroll-padding-top: 88px;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background-color: theme('colors.bg');
+    color: theme('colors.fg');
+    /* faint blueprint grid over the page ground */
+    background-image: linear-gradient(
+        to right,
+        rgba(120, 150, 180, 0.035) 1px,
+        transparent 1px
+      ),
+      linear-gradient(to bottom, rgba(120, 150, 180, 0.035) 1px, transparent 1px);
+    background-size: 56px 56px;
+    /* belt-and-suspenders only — layout must not overflow on its own */
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: rgba(242, 178, 76, 0.25);
+    color: theme('colors.fg');
+  }
+
+  a:focus-visible,
+  button:focus-visible,
+  summary:focus-visible {
+    outline: 2px solid theme('colors.amber');
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+@layer components {
+  .wrap {
+    @apply mx-auto w-full max-w-content px-5 sm:px-6;
+  }
+}
+
+@layer utilities {
+  /* faint scanlines — used only inside the contact panel */
+  .scanlines::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(218, 227, 235, 0.015) 0 1px,
+      transparent 1px 4px
+    );
+  }
 }
